@@ -8,6 +8,7 @@ import java.util.List;
 public class Validator {
     private static final int MIN_LIST_SIZE = 1;
     private static final int MAX_LIST_SIZE = 5;
+    private static final int CORRECT_NUMBER_OF_DECIMAL_PLACES = 2;
     public static final String INCORRECT_LIST_SIZE_MESSAGE = String.format("Product list should contain from %d to %d items", MIN_LIST_SIZE, MAX_LIST_SIZE);
     public static final String NULL_LIST_MESSAGE = "Product list cannot be null";
     public static final String NULL_CURRENCY_VALUE_MESSAGE = "Currency value cannot be null";
@@ -43,7 +44,7 @@ public class Validator {
             throw new IllegalArgumentException(INCORRECT_NUMBER_OF_DECIMAL_PLACES_MESSAGE);
         }
         String decimalPlaces = priceAsStringArray[1];
-        if (decimalPlaces.length() != 2) {
+        if (decimalPlaces.length() != CORRECT_NUMBER_OF_DECIMAL_PLACES) {
             throw new IllegalArgumentException(INCORRECT_NUMBER_OF_DECIMAL_PLACES_MESSAGE);
         }
     }
