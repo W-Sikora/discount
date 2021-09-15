@@ -13,7 +13,6 @@ import static util.Validator.*;
 import static util.Validator.validateCurrencyValue;
 
 class ValidatorTest {
-
     private static final Class<IllegalArgumentException> EXCEPTION_CLASS = IllegalArgumentException.class;
 
     @Test
@@ -31,7 +30,6 @@ class ValidatorTest {
                 () -> validateCurrencyValue(new BigDecimal("-1.23")));
         assertEquals(NEGATIVE_NUMBER_CURRENCY_VALUE_MESSAGE, exception.getMessage());
     }
-
 
     @Test
     @DisplayName("should throw exception if currency value has too many decimal places")
@@ -55,6 +53,14 @@ class ValidatorTest {
         IllegalArgumentException exception = assertThrows(EXCEPTION_CLASS,
                 () -> validateCurrencyValue(new BigDecimal("1")));
         assertEquals(INCORRECT_NUMBER_OF_DECIMAL_PLACES_MESSAGE, exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("should throw exception if list is null")
+    void shouldThrowExceptionIfListIsNull() {
+        IllegalArgumentException exception = assertThrows(EXCEPTION_CLASS,
+                () -> validateProducts(null));
+        assertEquals(NULL_LIST_MESSAGE, exception.getMessage());
     }
 
     @Test

@@ -4,38 +4,37 @@ import model.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static util.FinancialArithmetic.*;
+import static util.Validator.*;
 
 public class DiscountServiceImpl implements DiscountService {
     private final BigDecimal totalDiscount;
     private final BigDecimal totalPrice;
     private final List<Product> products;
-    private List<BigDecimal> discounts;
 
     public DiscountServiceImpl(BigDecimal totalDiscount, List<Product> products) {
+        validateInputData(totalDiscount, products);
         this.totalDiscount = totalDiscount;
         this.products = products;
         this.totalPrice = calculateTotalPrice();
     }
 
     @Override
-    public List<BigDecimal> getDiscounts() {
-        this.discounts = calculateAllDiscounts();
+    public BigDecimal[] calculateDiscounts() {
+        BigDecimal[] discounts = precalculateDiscounts();
         BigDecimal difference = subtract(totalDiscount, addAll(discounts));
-        System.out.println(difference);
-        if (difference.signum() > 0) {
-            correctLastDiscount(difference);
+        if (difference.signum() == -1 || difference.signum() == 1) {
+            correctLastDiscount(discounts, difference);
         }
         return discounts;
     }
 
-    private List<BigDecimal> calculateAllDiscounts() {
+    private BigDecimal[] precalculateDiscounts() {
         return products.stream()
                 .map(this::calculatePercentage)
                 .map(this::calculateDiscount)
-                .collect(Collectors.toList());
+                .toArray(BigDecimal[]::new);
     }
 
     private BigDecimal calculateDiscount(BigDecimal percentage) {
@@ -48,12 +47,18 @@ public class DiscountServiceImpl implements DiscountService {
 
     private BigDecimal calculateTotalPrice() {
         return addAll(products.stream()
-                .map(Product::getPrice));
+                .map(Product::getPrice)
+                .toArray(BigDecimal[]::new));
     }
 
-    private void correctLastDiscount(BigDecimal correction) {
-        int lastIndex = discounts.size() - 1;
-        discounts.add(lastIndex, discounts.get(lastIndex).add(correction));
+    private static void correctLastDiscount(BigDecimal[] array, BigDecimal correction) {
+        int lastIndex = array.length - 1;
+        array[lastIndex] = add(array[lastIndex], correction);
+    }
+
+    private static void validateInputData(BigDecimal totalDiscount, List<Product> products) {
+        validateCurrencyValue(totalDiscount);
+        validateProducts(products);
     }
 
 }
