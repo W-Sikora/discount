@@ -33,11 +33,11 @@ public class DiscountServiceImpl implements DiscountService {
     private BigDecimal[] precalculateDiscounts() {
         return products.stream()
                 .map(this::calculatePercentage)
-                .map(this::calculateDiscount)
+                .map(this::precalculateDiscount)
                 .toArray(BigDecimal[]::new);
     }
 
-    private BigDecimal calculateDiscount(BigDecimal percentage) {
+    private BigDecimal precalculateDiscount(BigDecimal percentage) {
         return multiply(percentage, totalDiscount);
     }
 
