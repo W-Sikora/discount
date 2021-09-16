@@ -14,7 +14,8 @@ public class DiscountServiceImpl implements DiscountService {
     private final List<Product> products;
 
     public DiscountServiceImpl(BigDecimal totalDiscount, List<Product> products) {
-        validateInputData(totalDiscount, products);
+        validateCurrencyValue(totalDiscount);
+        validateProducts(products);
         this.totalDiscount = totalDiscount;
         this.products = products;
         this.totalPrice = calculateTotalPrice();
@@ -54,11 +55,6 @@ public class DiscountServiceImpl implements DiscountService {
     private static void correctLastDiscount(BigDecimal[] array, BigDecimal correction) {
         int lastIndex = array.length - 1;
         array[lastIndex] = add(array[lastIndex], correction);
-    }
-
-    private static void validateInputData(BigDecimal totalDiscount, List<Product> products) {
-        validateCurrencyValue(totalDiscount);
-        validateProducts(products);
     }
 
 }
