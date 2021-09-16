@@ -30,7 +30,7 @@ class FinancialArithmeticTest {
     @Test
     @DisplayName("should subtract")
     void shouldSubtract() {
-        assertEquals(BigDecimal.ONE, subtract(new BigDecimal("1.01"), BigDecimal.ONE));
+        assertEquals(new BigDecimal("0.01"), subtract(new BigDecimal("1.01"), BigDecimal.ONE));
     }
 
     @Test
