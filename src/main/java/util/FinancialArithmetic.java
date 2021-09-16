@@ -11,31 +11,31 @@ public class FinancialArithmetic {
     private FinancialArithmetic() {
     }
 
-    public static BigDecimal addAll(BigDecimal[] values) {
+    public static BigDecimal addAll(BigDecimal[] summands) {
         BigDecimal sum = BigDecimal.ZERO;
-        for (BigDecimal value : values) {
-            sum = sum.add(value).setScale(DEFAULT_SCALE, ROUNDING_MODE);
+        for (BigDecimal summand : summands) {
+            sum = sum.add(summand).setScale(DEFAULT_SCALE, ROUNDING_MODE);
         }
         return sum;
     }
 
-    public static BigDecimal add(BigDecimal value1, BigDecimal value2) {
-        return value1.add(value2)
+    public static BigDecimal add(BigDecimal summand1, BigDecimal summand2) {
+        return summand1.add(summand2)
                 .setScale(DEFAULT_SCALE, ROUNDING_MODE);
     }
 
-    public static BigDecimal subtract(BigDecimal value1, BigDecimal value2) {
-        return value1.subtract(value2)
+    public static BigDecimal subtract(BigDecimal minuend, BigDecimal subtrahend) {
+        return minuend.subtract(subtrahend)
                 .setScale(DEFAULT_SCALE, ROUNDING_MODE);
     }
 
-    public static BigDecimal multiply(BigDecimal value1, BigDecimal value2) {
-        return value1.multiply(value2)
+    public static BigDecimal multiply(BigDecimal multiplicand, BigDecimal multiplier) {
+        return multiplicand.multiply(multiplier)
                 .setScale(DEFAULT_SCALE, ROUNDING_MODE);
     }
 
-    public static BigDecimal divide(BigDecimal value1, BigDecimal value2) {
-        return value1.divide(value2, PRECISE_SCALE, ROUNDING_MODE);
+    public static BigDecimal divide(BigDecimal dividend, BigDecimal divisor) {
+        return dividend.divide(divisor, PRECISE_SCALE, ROUNDING_MODE);
     }
 
 }
